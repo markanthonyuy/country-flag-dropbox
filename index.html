@@ -18,6 +18,10 @@
       z-index: 1;
     }
 
+    .advance-country-code {
+      display: inline-block;
+    }
+
     .jq-flag-selection {
       width: 30px;
       padding: 2px;
@@ -77,6 +81,7 @@
 </head>
 <body>
   <div class="jquery">
+    <label for="phone">Mobile Phone</label>
     <select class="country-code">
       <option value="+93" data-country="af">+93 Afghanistan</option>
       <option value="+355" data-country="al">+355 Albania</option>
@@ -85,6 +90,7 @@
       <option value="+244" data-country="an">+244 Angola</option>
       <option value="+63" data-country="ph">+63 Philippines</option>
     </select>
+    <input type="text" id="phone" name="phone" maxlength="80" value="">
   </div>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script>

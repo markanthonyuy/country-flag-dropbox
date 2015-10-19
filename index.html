@@ -23,10 +23,12 @@
     }
 
     .jq-flag-selection {
-      width: 30px;
-      padding: 2px;
-      border: 1px solid #000;
-      border-radius: 3px;
+      width: auto;
+      height: 17px;
+      padding: 0 2px 0 2px;
+      border: 1px solid rgb(120, 120, 120);
+      border-radius: 4px;
+      background: #DDD;
       display: inline-block;
     }
 
@@ -34,7 +36,7 @@
       float: right;
       width: 0; 
       height: 0; 
-      margin-top: 6px;
+      margin: 6px 0 0 5px;
       border-left: 4px solid transparent;
       border-right: 4px solid transparent;
       border-top: 4px solid #000;
@@ -42,19 +44,20 @@
 
     .jq-flag-selection-list {
       position: absolute;
-      top: 30px;
+      top: 19px;
       max-height: 200px;
       height: auto;
       max-width: 300px;
       width: auto;
-      overflow-y: scroll;
+      overflow-y: auto  ;
       overflow-x: hidden;
       background: #fff;
-      border: 1px solid #000;
+      border: 1px solid rgb(120, 120, 120);
       width: auto;
       max-width: 200px;
       z-index: 2;
       display: none;
+      box-shadow: 0px 10px 26px 4px #ccc;
     }
 
     .jq-flag-selection-list ul {
@@ -63,18 +66,28 @@
 
     .jq-flag-selection-list ul li {
     }
+
     .jq-country-code {
       width: 100%;
       display: inline-block;
       text-decoration: none;
       font-size: 13px;
       color: #000;
-      padding: 3px 20px 3px 3px;
+      padding: 1px 20px 1px 3px;
+      font-size: 13.3333px;
+      font-family: 'Arial';
+    }
+
+    .jq-country-code.active {
+      display: inline-block;
+      background: #DD4814;
+      color: #fff;
     }
 
     .jq-country-code:hover {
       display: inline-block;
-      background: orange;
+      background: #DD4814;
+      color: #fff;
     }
 
   </style>
@@ -111,7 +124,7 @@
             list = [];
         $.each($('.country-code option'), function(i, option) {
           var $option = $(option);
-          list.push('<li><a href="javascript:void(0)" class="jq-country-code" data-value="' + $option.val() + '"><img src="./img/' + $option.data('country') + '.png"> ' + $option.text() + '</a></li>');
+          list.push('<li><a href="javascript:void(0)" class="jq-country-code" data-value="' + $option.val() + '" data-country="' + $option.data('country') + '"><img src="./img/' + $option.data('country') + '.png"> ' + $option.text() + '</a></li>');
         });
         $ul.append(list.join(""));
 
@@ -124,7 +137,7 @@
         var $flagSelectionContainer = $('<a/>', {
           href: 'javascript:void(0)',
           class: 'jq-flag-selection'
-        }).html('<img src="./img/ph.png" alt="flag" class="jq-selected-flag"> <span class="arrow-down"></span>');
+        }).html('<img src="./img/ph.png" alt="flag" class="jq-selected-flag"><span class="arrow-down"></span>');
 
         // DONE: Create advance country code container
         var $advanceCountryCode = $('<div/>', {
@@ -149,12 +162,20 @@
           var _this = $(this);
           $flagSelectionList.hide();
           $selectedFlag.attr('src', _this.children('img').attr('src'));
-          $target.val(_this.data('value'));
+          $('.jq-country-code').removeClass('active');
+          _this.addClass('active');
+          $target.val(_this.data('value')); // Sync advance county code to country code
+        });
+
+        // Sync county code to advance country code
+        $target.on('change', function() {
+          var _this = $(this);
+          console.log(_this.val());
+          $('.jq-country-code[data-value="' + _this.val() + '"]').trigger('click');
         });
 
         $(document).on('click', function(e) {
           e.stopPropagation();
-          console.log(e.target.parentNode.className);
           if(e.target.className != 'jq-flag-selection' || e.target.parentNode.className != 'jq-flag-selection') {
             $flagSelectionList.hide();
           }

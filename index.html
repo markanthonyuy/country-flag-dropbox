@@ -22,6 +22,20 @@
       display: inline-block;
     }
 
+    .jq-country-code-number {
+      width: 40px;
+      display: inline-block;
+    }
+
+    .jq-selected-country-code {
+      display: inline-block;
+      padding: 0 2px;
+      vertical-align: 1px;
+      text-decoration: none;
+      font-size: 13px;
+      color: #242426;
+    }
+
     .jq-flag-selection {
       width: auto;
       height: 17px;
@@ -45,7 +59,7 @@
     .jq-flag-selection-list {
       position: absolute;
       top: 19px;
-      max-height: 200px;
+      max-height: 300px;
       height: auto;
       max-width: 300px;
       width: auto;
@@ -96,12 +110,40 @@
   <div class="jquery">
     <label for="phone">Mobile Phone</label>
     <select class="country-code">
-      <option value="+93" data-country="af">+93 Afghanistan</option>
-      <option value="+355" data-country="al">+355 Albania</option>
-      <option value="+213" data-country="ag">+213 Algeria</option>
-      <option value="+376" data-country="ao">+376 Andora</option>
-      <option value="+244" data-country="an">+244 Angola</option>
-      <option value="+63" data-country="ph">+63 Philippines</option>
+      <option value="+65" data-country="sg" data-country-name="Singapore" selected="selected">+65 Singapore</option>
+      <option value="+355" data-country="al" data-country-name="Albania">+355 Albania</option>
+      <option value="+376" data-country="ad" data-country-name="Andorra">+376 Andorra</option>
+      <option value="+1" data-country="ag" data-country-name="Antigua">+1 Antigua</option>
+      <option value="+54" data-country="ar" data-country-name="Argentina">+54 Argentina</option>
+      <option value="+374" data-country="am" data-country-name="Armenia">+374 Armenia</option>
+      <option value="+61" data-country="au" data-country-name="Australia">+61 Australia</option>
+      <option value="+43" data-country="at" data-country-name="Austria">+43 Austria</option>
+      <option value="+994" data-country="az" data-country-name="Azerbaijan">+994 Azerbaijan</option>
+      <option value="+1" data-country="bs" data-country-name="Bahamas">+1 Bahamas</option>
+      <option value="+973" data-country="bh" data-country-name="Bahrain">+973 Bahrain</option>
+      <option value="+880" data-country="bd" data-country-name="Bangladesh">+880 Bangladesh</option>
+      <option value="+1" data-country="bb" data-country-name="Barbados">+1 Barbados</option>
+      <option value="+375" data-country="by" data-country-name="Belarus">+375 Belarus</option>
+      <option value="+32" data-country="be" data-country-name="Belgium">+32 Belgium</option>
+      <option value="+501" data-country="bz" data-country-name="Belize">+501 Belize</option>
+      <option value="+1" data-country="bm" data-country-name="Bermuda">+1 Bermuda</option>
+      <option value="+975" data-country="bt" data-country-name="Bhutan">+975 Bhutan</option>
+      <option value="+591" data-country="bo" data-country-name="Bolivia">+591 Bolivia</option>
+      <option value="+387" data-country="ba" data-country-name="Bosnia-Herzegovina">+387 Bosnia-Herzegovina</option>
+      <option value="+267" data-country="bw" data-country-name="Botswana">+267 Botswana</option>
+      <option value="+55" data-country="br" data-country-name="Brazil">+55 Brazil</option>
+      <option value="+1" data-country="vg" data-country-name="British Virgin Islands">+1 British Virgin Islands</option>
+      <option value="+673" data-country="bn" data-country-name="Brunei">+673 Brunei</option>
+      <option value="+359" data-country="bg" data-country-name="Bulgaria">+359 Bulgaria</option>
+      <option value="+855" data-country="kh" data-country-name="Cambodia">+855 Cambodia</option>
+      <option value="+1" data-country="ca" data-country-name="Canada">+1 Canada</option>
+      <option value="+1" data-country="ky" data-country-name="Cayman Islands">+1 Cayman Islands</option>
+      <option value="+56" data-country="cl" data-country-name="Chile">+56 Chile</option>
+      <option value="+86" data-country="cn" data-country-name="China">+86 China</option>
+      <option value="+57" data-country="co" data-country-name="Colombia">+57 Colombia</option>
+      <option value="+682" data-country="ck" data-country-name="Cook Islands">+682 Cook Islands</option>
+      <option value="+506" data-country="cr" data-country-name="Costa Rica">+506 Costa Rica</option>
+      <option value="+385" data-country="hr" data-country-name="Croatia">+385 Croatia</option>
     </select>
     <input type="text" id="phone" name="phone" maxlength="80" value="">
   </div>
@@ -119,12 +161,17 @@
         $(targetClass).hide();
 
         // DONE: Create advance country code html
-        // DONE:Crete list of country codes
+        // DONE: Crete list of country codes
         var $ul = $('<ul/>'),
-            list = [];
+            list = [],
+            selectedOption;
         $.each($('.country-code option'), function(i, option) {
+          console.log(option);
           var $option = $(option);
-          list.push('<li><a href="javascript:void(0)" class="jq-country-code" data-value="' + $option.val() + '" data-country="' + $option.data('country') + '"><img src="./img/' + $option.data('country') + '.png"> ' + $option.text() + '</a></li>');
+          if($option.is(':selected')) {
+            selectedOption = $option;
+          }
+          list.push('<li><a href="javascript:void(0)" class="jq-country-code" data-value="' + $option.val() + '" data-country="' + $option.data('country') + '"><img src="./img/' + $option.data('country') + '.png"> ' + '<span class="jq-country-code-number">' + $option.val() + '</span>' + $option.data('country-name') + '</a></li>');
         });
         $ul.append(list.join(""));
 
@@ -137,7 +184,7 @@
         var $flagSelectionContainer = $('<a/>', {
           href: 'javascript:void(0)',
           class: 'jq-flag-selection'
-        }).html('<img src="./img/ph.png" alt="flag" class="jq-selected-flag"><span class="arrow-down"></span>');
+        }).html('<img src="./img/' + selectedOption.data('country') + '.png" class="jq-selected-flag"><span class="jq-selected-country-code"> ' + selectedOption.val() + '</span> <span class="arrow-down"></span>');
 
         // DONE: Create advance country code container
         var $advanceCountryCode = $('<div/>', {
@@ -151,6 +198,7 @@
             $flagSelectionList  = $('.jq-flag-selection-list'),
             $flagSelectionItems = $('.jq-country-code'),
             $selectedFlag       = $('.jq-selected-flag'),
+            $selectedCode       = $('.jq-selected-country-code'),
             $target             = $('.country-code');
 
         $flagSelectionBtn.on('click', function(e) {
@@ -162,6 +210,7 @@
           var _this = $(this);
           $flagSelectionList.hide();
           $selectedFlag.attr('src', _this.children('img').attr('src'));
+          $selectedCode.text(' ' + _this.data('value'));
           $('.jq-country-code').removeClass('active');
           _this.addClass('active');
           $target.val(_this.data('value')); // Sync advance county code to country code

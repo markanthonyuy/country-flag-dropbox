@@ -249,8 +249,16 @@
           arrLetter.push(String.fromCharCode(code));
           console.log(arrLetter);
           $('.jq-country-code').removeClass('active');
-          $('.jq-country-code:contains("' + String(arrLetter.join('')) + '"):first').addClass('active');
-        }
+          var $selectedItem = $('.jq-country-code:contains("' + String(arrLetter.join('')) + '"):first').addClass('active');
+
+          if($selectedItem.length) {
+            // Make sure to see what is active
+            var selectedItemTop = $selectedItem.offset().top,
+                parentTop = $('.jq-flag-selection-list').offset().top;
+
+            $('.jq-flag-selection-list').scrollTop($('.jq-flag-selection-list').scrollTop() + (selectedItemTop - parentTop));
+            }
+          }
       });
       initCountryCode('.country-code');
 

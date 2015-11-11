@@ -149,7 +149,13 @@
   </div>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script>
-    // Jquery
+    // Hack to make jquery contain not case sensitive
+    $.expr[":"].contains = $.expr.createPseudo(function(arg) {
+      return function( elem ) {
+       return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+      };
+    });
+
     (function() {
       function initCountryCode(targetClass) {
 
@@ -166,12 +172,11 @@
             list = [],
             selectedOption;
         $.each($('.country-code option'), function(i, option) {
-          console.log(option);
           var $option = $(option);
           if($option.is(':selected')) {
             selectedOption = $option;
           }
-          list.push('<li><a href="javascript:void(0)" class="jq-country-code" data-value="' + $option.val() + '" data-country="' + $option.data('country') + '"><img src="./img/' + $option.data('country') + '.png"> ' + '<span class="jq-country-code-number">' + $option.val() + '</span>' + $option.data('country-name') + '</a></li>');
+          list.push('<li><a href="javascript:void(0)" class="jq-country-code" data-value="' + $option.val() + '" data-country="' + $option.data('country') + '" data-country-name="' + $option.data('country-name') + '"><img src="./img/' + $option.data('country') + '.png"> ' + '<span class="jq-country-code-number">' + $option.val() + '</span>' + $option.data('country-name') + '</a></li>');
         });
         $ul.append(list.join(""));
 
@@ -208,7 +213,7 @@
 
         $flagSelectionItems.on('click', function() {
           var _this = $(this);
-          $flagSelectionList.hide();
+          $flagSelectionList.hide(1, resetArrLetter());
           $selectedFlag.attr('src', _this.children('img').attr('src'));
           $selectedCode.text(' ' + _this.data('value'));
           $('.jq-country-code').removeClass('active');
@@ -226,12 +231,29 @@
         $(document).on('click', function(e) {
           e.stopPropagation();
           if(e.target.className != 'jq-flag-selection' || e.target.parentNode.className != 'jq-flag-selection') {
-            $flagSelectionList.hide();
+            $flagSelectionList.hide(1, resetArrLetter());
           }
         });
       }
 
+      function resetArrLetter() {
+        arrLetter = [];
+      }
+
+      // Listen to the keyboard press event to select country based on what the user typed
+      var arrLetter = [];
+      $(document).on('keypress', function(e) {
+        if($('.jq-flag-selection-list').is(':visible')) {
+          e = e || window.event; // consider IE
+          var code = e.keyCode || e.which; // consider IE
+          arrLetter.push(String.fromCharCode(code));
+          console.log(arrLetter);
+          $('.jq-country-code').removeClass('active');
+          $('.jq-country-code:contains("' + String(arrLetter.join('')) + '"):first').addClass('active');
+        }
+      });
       initCountryCode('.country-code');
+
     })()
   </script>
 </body>

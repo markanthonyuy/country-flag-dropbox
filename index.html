@@ -240,26 +240,72 @@
         arrLetter = [];
       }
 
+      var arrLetter = [],
+          lastKeypress = 0, allowance = 0, lastQueryLetterLen = 0, ctr = 0;
+
       // Listen to the keyboard press event to select country based on what the user typed
-      var arrLetter = [];
       $(document).on('keypress', function(e) {
+        // Only run this block of code when .jq-flag-selection-list is visible
         if($('.jq-flag-selection-list').is(':visible')) {
+
           e = e || window.event; // consider IE
           var code = e.keyCode || e.which; // consider IE
+
+          // Reset the array if more than 1 second since the last stroke. So if you first type, "p" and then "h" 
+          // within 1 second you display "Philippines". But if you type "p", wait 2 seconds and then "h" you first 
+          // display "Panama" and then "Honduras".
+
+          // Reset the array if there are more than 3 characters already 
+          if(arrLetter.length == 3 || (+new Date() > +allowance)) {
+            arrLetter = [];
+          }
+
+          if(+new Date() > +allowance) {
+            ctr = 0;
+          }
+          
           arrLetter.push(String.fromCharCode(code));
           console.log(arrLetter);
+          arrLetter[0] = arrLetter[0].toUpperCase();
+
           $('.jq-country-code').removeClass('active');
-          var $selectedItem = $('.jq-country-code:contains("' + String(arrLetter.join('')) + '"):first').addClass('active');
+          var $selectedItem = $('.jq-country-code[data-country-name^="' + String(arrLetter.join('')) + '"]:eq('+ ctr +')');
 
           if($selectedItem.length) {
-            // Make sure to see what is active
+            $selectedItem.addClass('active');
+
+            // Make sure to see what is active. Scroll to it
             var selectedItemTop = $selectedItem.offset().top,
                 parentTop = $('.jq-flag-selection-list').offset().top;
 
             $('.jq-flag-selection-list').scrollTop($('.jq-flag-selection-list').scrollTop() + (selectedItemTop - parentTop));
+          } else {
+
+            // If you type "b" and the selected already starts with "b" then you select the next country 
+            // starting with "b". If there's no more countries after the selected country starting with "b", then you start over.
+            lastQueryLetterLen = $('.jq-country-code[data-country-name^="' + String(arrLetter[0]) + '"]').length;
+
+            if(ctr > lastQueryLetterLen) {
+              ctr = 0;
+            }
+            
+            console.log(lastQueryLetterLen);
+            console.log(arrLetter[0]);
+            console.log(arrLetter.length);
+            console.log(ctr);
+            if(arrLetter.length > 1 && (arrLetter[0] == arrLetter[arrLetter.length - 1].toUpperCase())) {
+              $('.jq-country-code').removeClass('active');
+              var $newSelItem = $('.jq-country-code[data-country-name^="' + String(arrLetter[0]) + '"]:eq('+ ctr +')');
+              $newSelItem.addClass('active');
+              ctr++;
             }
           }
+
+          lastKeypress = new Date(),
+          allowance = new Date().setTime(lastKeypress.getTime() + 1000);
+        }
       });
+
       initCountryCode('.country-code');
 
     })()

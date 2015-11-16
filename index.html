@@ -84,6 +84,7 @@
     .jq-country-code {
       width: 100%;
       display: inline-block;
+      margin-top: -1px;
       text-decoration: none;
       font-size: 13px;
       color: #000;
@@ -97,13 +98,6 @@
       background: #DD4814;
       color: #fff;
     }
-
-    .jq-country-code:hover {
-      display: inline-block;
-      background: #DD4814;
-      color: #fff;
-    }
-
   </style>
 </head>
 <body>
@@ -219,6 +213,12 @@
           $('.jq-country-code').removeClass('active');
           _this.addClass('active');
           $target.val(_this.data('value')); // Sync advance county code to country code
+        });
+
+        $flagSelectionItems.on('mouseover', function() {
+          var _this = $(this);
+          $('.jq-country-code').removeClass('active');
+          _this.addClass('active');
         });
 
         // Sync county code to advance country code

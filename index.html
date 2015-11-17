@@ -265,7 +265,6 @@
           }
           
           arrLetter.push(String.fromCharCode(code));
-          console.log(arrLetter);
           arrLetter[0] = arrLetter[0].toUpperCase();
 
           $('.jq-country-code').removeClass('active');
@@ -280,24 +279,22 @@
 
             $('.jq-flag-selection-list').scrollTop($('.jq-flag-selection-list').scrollTop() + (selectedItemTop - parentTop));
           } else {
+            ctr++;
 
             // If you type "b" and the selected already starts with "b" then you select the next country 
             // starting with "b". If there's no more countries after the selected country starting with "b", then you start over.
             lastQueryLetterLen = $('.jq-country-code[data-country-name^="' + String(arrLetter[0]) + '"]').length;
 
-            if(ctr > lastQueryLetterLen) {
+            if(ctr > (lastQueryLetterLen - 1)) {
               ctr = 0;
             }
             
-            console.log(lastQueryLetterLen);
-            console.log(arrLetter[0]);
-            console.log(arrLetter.length);
-            console.log(ctr);
             if(arrLetter.length > 1 && (arrLetter[0] == arrLetter[arrLetter.length - 1].toUpperCase())) {
               $('.jq-country-code').removeClass('active');
               var $newSelItem = $('.jq-country-code[data-country-name^="' + String(arrLetter[0]) + '"]:eq('+ ctr +')');
               $newSelItem.addClass('active');
-              ctr++;
+
+              arrLetter.pop();
             }
           }
 

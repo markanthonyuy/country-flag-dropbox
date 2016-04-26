@@ -6,6 +6,9 @@ An alternative to select tag `<select>` that can support adding a flag in the op
 ### Dependency
 Latest version of jQuery (It might work for older version, I just didn't bother to test.)
 
+### Support
+Keyboard press event to select country based on what the user typed (Max 3 letters only).
+
 ### Instructions
 Add country-flag-dropdown css and js file and then simply add the markup
 ```html

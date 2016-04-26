@@ -7,7 +7,7 @@ An alternative to select tag `<select>` that can support adding a flag in the op
 Latest version of jQuery (It might work for older version, I just didn't bother to test.)
 
 ### Instructions
-Simply add the markup
+Add country-flag-dropdown css and js file and then simply add the markup
 ```html
 <select class="country-code">
   <option data-country="sg" data-country-name="Singapore" value="+65">+65 Singapore</option>

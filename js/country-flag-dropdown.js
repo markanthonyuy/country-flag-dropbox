@@ -17,7 +17,7 @@ function initCountryCode(targetClass) {
     if($option.is(':selected')) {
       selectedOption = $option;
     }
-    list.push('<li><a href="javascript:void(0)" class="jq-country-code" data-value="' + $option.val() + '" data-country="' + $option.data('country') + '" data-country-name="' + $option.data('country-name') + '"><img src="./img/' + $option.data('country') + '.png"> ' + '<span class="jq-country-code-number">' + $option.val() + '</span>' + $option.data('country-name') + '</a></li>');
+    list.push('<li><a href="javascript:void(0)" class="jq-country-code" data-value="' + $option.val() + '" data-country="' + $option.data('country') + '" data-country-name="' + $option.data('country-name') + '"><span class="jq-flag-img"><img src="./img/' + $option.data('country') + '.png"></span>' + '<span class="jq-country-code-number">' + $option.val() + '</span>' + $option.data('country-name') + '</a></li>');
   });
   $ul.append(list.join(""));
 
@@ -60,7 +60,7 @@ function initCountryCode(targetClass) {
     $('.jq-country-code').removeClass('active');
     _this.addClass('active');
     $target.val(_this.data('value')); // Sync advance county code to country code
-    
+
     console.log('VALUE: ' + $target.val());
     console.log('COUNTRY CODE: ' +_this.data('country'));
     console.log('COUNTRY NAME: ' +_this.data('country-name'));

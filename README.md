@@ -3,6 +3,8 @@
 ### About
 An alternative to select tag `<select>` that can support adding a flag in the option `<option>`.
 
+![Country Flag Dropdown Sample Image](https://raw.githubusercontent.com/markanthonyuy/country-flag-dropbox/master/img/country-flag-dropdown.PNG)
+
 ### Dependency
 Latest version of jQuery (It might work for older version, I just didn't bother to test.)
 

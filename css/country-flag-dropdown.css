@@ -1,0 +1,81 @@
+
+
+.advance-country-code {
+  display: inline-block;
+}
+
+.jq-country-code-number {
+  width: 40px;
+  display: inline-block;
+}
+
+.jq-selected-country-code {
+  display: inline-block;
+  padding: 0 2px;
+  vertical-align: 1px;
+  text-decoration: none;
+  font-size: 13px;
+  color: #242426;
+}
+
+.jq-flag-selection {
+  width: auto;
+  height: 17px;
+  padding: 0 2px 0 2px;
+  border: 1px solid rgb(120, 120, 120);
+  border-radius: 4px;
+  background: #DDD;
+  display: inline-block;
+}
+
+.arrow-down {
+  float: right;
+  width: 0;
+  height: 0;
+  margin: 6px 0 0 5px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #000;
+}
+
+.jq-flag-selection-list {
+  position: absolute;
+  top: 19px;
+  max-height: 300px;
+  height: auto;
+  max-width: 300px;
+  width: auto;
+  overflow-y: auto  ;
+  overflow-x: hidden;
+  background: #fff;
+  border: 1px solid rgb(120, 120, 120);
+  width: auto;
+  max-width: 200px;
+  z-index: 2;
+  display: none;
+  box-shadow: 0px 10px 26px 4px #ccc;
+}
+
+.jq-flag-selection-list ul {
+  list-style: none;
+}
+
+.jq-flag-selection-list ul li {
+}
+
+.jq-country-code {
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  font-size: 13px;
+  color: #000;
+  padding: 1px 20px 1px 3px;
+  font-size: 13.3333px;
+  font-family: 'Arial';
+}
+
+.jq-country-code.active {
+  display: inline-block;
+  background: #DD4814;
+  color: #fff;
+}

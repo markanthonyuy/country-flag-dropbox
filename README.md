@@ -8,7 +8,7 @@ Latest version of jQuery (It might work for older version, I just didn't bother 
 
 ### Instructions
 Simply add the markup
-`
+```html
 <select class="country-code">
   <option data-country="sg" data-country-name="Singapore" value="+65">+65 Singapore</option>
   <option data-country="al" data-country-name="Albania" value="+355">+355 Albania</option>
@@ -151,11 +151,11 @@ Simply add the markup
   <option data-country="vn" data-country-name="Vietnam" value="+84">+84 Vietnam</option>
   <option data-country="zw" data-country-name="Zimbabwe" value="+263">+263 Zimbabwe</option>
 </select>
-`
+```
 and then initialize the function
-`
+~~~ js
 initCountryCode('.country-code');
-`
+~~~
 
 ### Licence
 MIT
